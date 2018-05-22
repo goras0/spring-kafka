@@ -1,0 +1,10 @@
+
+
+spring:
+  kafka:
+    template:
+      default-topic: orders-topic
+    bootstrap-servers:
+    - localhost:9092
+
+ 
