@@ -1,21 +1,38 @@
 package se.seb.test.springkafka.config;
 
+import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.kafka.ConcurrentKafkaListenerContainerFactoryConfigurer;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.annotation.KafkaListenerConfigurer;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
+import org.springframework.kafka.config.KafkaListenerEndpointRegistrar;
 import org.springframework.kafka.core.ConsumerFactory;
+import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.listener.DeadLetterPublishingRecoverer;
 import org.springframework.kafka.listener.SeekToCurrentErrorHandler;
+import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.util.backoff.FixedBackOff;
+import se.seb.test.springkafka.messaging.MyValidator;
 
 @Configuration
-public class KafkaConfig {
+public class KafkaConfig implements KafkaListenerConfigurer {
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
+
+    /**
+     *  validate @KafkaListener @Payload arguments
+     * @param registrar
+     */
+   @Override
+    public void configureKafkaListeners(KafkaListenerEndpointRegistrar registrar) {
+     //   registrar.setValidator(new MyValidator());
+    }
+
 
     /**
      * We override Spring Boot’s auto-configured container factory with our own.
@@ -44,4 +61,24 @@ public class KafkaConfig {
         return factory;
     }
 
+/*    @Bean
+    public DefaultKafkaProducerFactory pf(KafkaProperties properties) {
+        Map<String, Object> props = properties.buildProducerProperties();
+        DefaultKafkaProducerFactory pf = new DefaultKafkaProducerFactory(props,
+                new StringSerializer(),
+                new JsonSerializer<>(MyValueType.class)
+                        .noTypeInfo());
+    }
+
+    @Bean
+    public DefaultKafkaConsumerFactory pf(KafkaProperties properties) {
+        Map<String, Object> props = properties.buildConsumerProperties();
+        DefaultKafkaConsumerFactory pf = new DefaultKafkaConsumerFactory(props,
+                new JsonDeserializer<>(MyKeyType.class)
+                        .forKeys()
+                        .ignoreTypeHeaders(),
+                new JsonSerializer<>(MyValueType.class)
+                        .ignoreTypeHeaders());
+    }
+*/
 }

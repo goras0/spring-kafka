@@ -2,7 +2,6 @@
 spring:
   kafka:
     consumer:
-      missingTopicsFatal: false
       group-id: group_id
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -11,6 +10,8 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
     bootstrap-servers: localhost:9092
-    missingTopicsFatal: false
+
+    listener:
+      missing-topics-fatal: false
 
  

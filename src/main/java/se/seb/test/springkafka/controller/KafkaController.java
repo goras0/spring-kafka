@@ -16,7 +16,7 @@ public class KafkaController {
     }
 
     @PostMapping(value = "/{topic}")
-    public void sendMessageToKafkaTopic(@PathVariable("topic") String topic, @RequestParam("message") String message) {
+    public void sendMessageToKafkaTopic(@PathVariable("topic") String topic, @RequestBody String message) {
         this.producer.sendMessage(topic, message);
     }
 }
