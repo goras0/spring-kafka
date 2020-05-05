@@ -1,4 +1,4 @@
-package se.seb.test.springkafka;
+package se.seb.test.springkafka.repo;
 
 import se.seb.test.springkafka.model.Order;
 

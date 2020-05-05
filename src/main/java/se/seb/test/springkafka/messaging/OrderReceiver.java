@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import se.seb.test.springkafka.DataRepo;
+import se.seb.test.springkafka.repo.DataRepo;
 import se.seb.test.springkafka.model.Order;
 
 @Component
