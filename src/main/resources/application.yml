@@ -14,4 +14,28 @@ spring:
     listener:
       missing-topics-fatal: false
 
- 
+#Simple properties
+anonym:
+  hostname: mailer@mail.com
+  port: 9000
+  from: mailer@mail.com
+
+#List properties
+  defaultRecipients[0]: admin@mail.com
+  defaultRecipients[1]: owner@mail.com
+
+ #Map Properties
+  additionalHeaders:
+    redelivery: true
+    secure: true
+
+#Object properties
+  source[0]:
+    path: /raw/payments/assess
+    type: HDFS
+    attributeInfo[0]:
+      pattern: $.request.userId
+      method: hash
+    attributeInfo[1]:
+      pattern: $.request.account
+      method: hash
